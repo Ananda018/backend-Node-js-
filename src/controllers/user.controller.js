@@ -25,7 +25,11 @@ const registerUser = asyncHandler(async (req, res) => {
 
   // STEP 4: Extract file paths for avatar and cover image from request (multer stores them in req.files)
   const avatarLocalPath = req.files?.avatar[0]?.path; // Optional chaining prevents errors if file missing
-  const coverImageLocalPath = req.files?.coverImage[0]?.path;
+ // const coverImageLocalPath = req.files?.coverImage[0]?.path;
+ let coverImageLocalPath
+ if(req.files&& Array.isArray(req.files.coverImage)&&req.files.coverImage.length>0){
+  coverImageLocalPath = req.files.coverImage[0].path;
+ }
 
   // STEP 5: Avatar is mandatory → throw error if missing
   if (!avatarLocalPath) {
